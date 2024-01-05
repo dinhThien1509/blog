@@ -1,0 +1,151 @@
+<form class="mt-4" name="container-form" method="POST" action="/courses/handle-form-actions" >
+   <div class="course-container">
+        <h3>Khóa học của tôi</h3>
+        <a href="/me/trash/courses" class="recycle-bin-link bi bi-trash">
+        </a>
+        <div class="mt-4 d-flex align-items-center">
+            <div class="form-check">
+                <input class="form-check-input" type="checkbox" value="" id="checkbox-all">
+                <label class="form-check-label" for="checkbox-all">
+                    Chọn tất cả 
+                </label>
+            </div>
+            <select class="form-control form-control-sm checkbox-select-all-options" name="action" required>
+                <option value="">--Chọn hành động--</option>
+                <option value="delete">Xóa</option>
+            
+            </select>
+
+            <button class="btn btn-primary btn-sm btn-checkall-submid" disabled >Áp dụng</button>
+        </div>
+    </div>
+
+    <table class="table mt-4">
+        <thead>
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col"></th>
+                <th scope="col"> 
+                    Tên khóa học
+                    {{{sortable 'name' _sort}}}
+                </th>
+                <th scope="col">
+                    Level
+                    {{{sortable 'level' _sort}}}
+                </th>
+                <th scope="col">
+                    Thời gian tạo
+                    {{{sortable 'creatdAt' _sort}}}
+                </th>
+                <th scope="col" class="button-column"></th>
+
+            </tr>
+        </thead>
+        <tbody>
+            {{#each courses}}
+                <tr class="highlighted-row">
+                    <td>
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" name="courseIds[]" value="{{this._id}}">
+                    </td>
+                    <th scope="row">{{sum @index 1}}</th>
+                    <td>{{this.name}}</td>
+                    <td>{{this.level}}</td>
+                    <td>{{this.createdAt}}</td>
+                <td>
+                    <a href="/courses/{{this._id}}/edit" class="btn btn-link edit-button">Sửa</a>
+                    <a href="" class="btn btn-link delete-button" data-toggle="modal" data-id="{{this._id}}" data-target="#delete-course-model">Xóa</a>
+                </td>
+                </tr>
+            {{else}}
+            <tr>
+                <td colspan="5" class="text-center">
+                    Bạn chưa đăng khóa học nào!!
+                    <a href="/courses/create">Đăng khóa học</a>
+                </td>
+            </tr>
+            {{/each}}
+        </tbody>
+     </table>
+</form>
+
+{{!--Confirm delete course --}}
+<div id="delete-course-model" class="modal" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Đồng ý xóa khóa học</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p>Bạn chắc chắn muốn xóa khóa học này?</p>
+            </div>
+            <div class="modal-footer">
+                <button id="btn-delete-course" type="button" class="btn btn-danger">Xóa bỏ</button>
+                <button  type="button" class="btn btn-secondary" data-dismiss="modal">Hủy</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+{{!--Delete hidden form--}}
+        <form name="delete-course-form" method="post"></form>
+
+<script>
+        // Sự kiện xảy ra khi cả trang HTML đã được tải xong và sẵn sàng tương tác
+        document.addEventListener('DOMContentLoaded', function() {
+        
+            var courseId;
+            var deleteForm = document.forms['delete-course-form'];
+            var containerForm = $('form[name="container-form"]')
+            var btnDeleteCourse = document.getElementById('btn-delete-course');
+            var checkboxAll = $('#checkbox-all');
+            var courseItemCheckbox = $('input[name="courseIds[]"]');
+            var checkAllSubmit = $('.btn-checkall-submid');
+
+
+            // Sự kiện xảy ra khi modal 'delete-course-model' được hiển thị
+            $('#delete-course-model').on('show.bs.modal', function (event) {
+                // Lấy ra nút mở modal để lấy thông tin ID của khóa học
+                var button = $(event.relatedTarget);
+                courseId = button.data('id');
+            });
+
+            // Xử lý sự kiện khi nút xóa khóa học được click
+            btnDeleteCourse.onclick = function() {
+                // Cập nhật hành động của biểu mẫu để trỏ đến URL cụ thể của khóa học và sử dụng phương thức DELETE
+                deleteForm.action = '/courses/' + courseId + '?_method=DELETE';
+                
+                // Gửi biểu mẫu để thực hiện xóa khóa học
+                deleteForm.submit();
+            }
+
+            //checkbox all change
+            checkboxAll.change(function() {
+                var isCheckedAll = $(this).prop('checked')
+                courseItemCheckbox.prop('checked', isCheckedAll);
+                renderCheckedAllSubmid()
+            });
+
+            //Course item checkbox change
+            courseItemCheckbox.change(function() {
+                var isCheckedAll = courseItemCheckbox.length === $('input[name="courseIds[]"]:checked').length;
+                checkboxAll.prop('checked', isCheckedAll);
+                renderCheckedAllSubmid()
+            });
+
+            //render checkAll submit button
+            function renderCheckedAllSubmid() {
+                var checkedCount = $('input[name="courseIds[]"]:checked').length;
+                if (checkedCount > 0) {
+                    checkAllSubmit.attr('disabled', false);
+
+                }else {
+                    checkAllSubmit.attr('disabled', true);
+                }
+            }
+
+        });
+</script>

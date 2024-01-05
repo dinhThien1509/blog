@@ -1,0 +1,121 @@
+@charset "UTF-8";
+.card-course-item {
+  margin-top: 14px; }
+
+/* avatar */
+.user-avatar {
+  width: 30px;
+  height: 28px;
+  border-radius: 30%;
+  margin-right: 3px; }
+
+/* thùng rác */
+.empty-trash {
+  background-color: #f8d7da;
+  color: #721c24;
+  padding: 10px;
+  text-align: center;
+  font-size: 16px;
+  font-weight: bold; }
+
+/* Nút Quay lại */
+.back-button {
+  display: inline-flex;
+  align-items: center;
+  padding: 10px 20px;
+  background-color: #3498db;
+  color: #fff;
+  text-decoration: none;
+  border: 2px solid #2980b9;
+  border-radius: 5px;
+  transition: background-color 0.3s ease; }
+
+th, td {
+  padding: 12px;
+  text-align: left;
+  border-bottom: 1px solid #ddd; }
+
+tr:hover {
+  background-color: #f2f2f2; }
+
+.button-column button {
+  background-color: #28a745;
+  color: #fff;
+  padding: 8px 12px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer; }
+
+.highlighted-row {
+  background-color: #47d7d5;
+  /* Màu nền cho hàng đặc biệt */
+  color: #151212;
+  /* Màu chữ */
+  font-weight: bold;
+  /* Độ đậm cho chữ */
+  border: 1px solid #611f5d;
+  /* Đường viền */
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+  /* Bóng đổ */ }
+
+/* Phần style cho liên kết "Recycle bin" */
+.recycle-bin-link {
+  display: inline-block;
+  padding: 10px 20px;
+  background-color: #1509b7;
+  color: #fff;
+  text-decoration: none;
+  border-radius: 5px;
+  transition: background-color 0.3s ease; }
+
+/* Phần style cho sữa xóa */
+.edit-button,
+.delete-button {
+  display: inline-block;
+  padding: 5px 10px;
+  text-decoration: none;
+  border: 1px solid #3498db;
+  color: #3498db;
+  border-radius: 4px;
+  transition: background-color 0.3s ease; }
+
+.delete-button {
+  color: #e74c3c;
+  border: 1px solid #e74c3c; }
+
+/* Khi di chuột qua, thay đổi màu nền và màu chữ */
+.edit-button:hover,
+.delete-button:hover {
+  background-color: #3498db;
+  color: #fff; }
+
+/* Phần style cho nút Khôi phục và Xóa vĩnh viễn */
+.restore-button,
+.delete-permanently-button {
+  display: inline-block;
+  padding: 5px 10px;
+  text-decoration: none;
+  border: 1px solid #27ae60;
+  /* Màu biên nút Khôi phục */
+  color: #27ae60;
+  /* Màu chữ nút Khôi phục */
+  border-radius: 4px;
+  transition: background-color 0.3s ease; }
+
+.delete-permanently-button {
+  border: 1px solid #e74c3c;
+  /* Màu biên nút Xóa vĩnh viễn */
+  color: #e74c3c;
+  /* Màu chữ nút Xóa vĩnh viễn */ }
+
+/* Khi di chuột qua, thay đổi màu nền và màu chữ */
+.restore-button:hover,
+.delete-permanently-button:hover {
+  background-color: #27ae60;
+  /* Màu nền khi di chuột qua nút Khôi phục */
+  color: #fff;
+  /* Màu chữ khi di chuột qua nút Khôi phục */ }
+
+.checkbox-select-all-options {
+  width: 165px;
+  margin: 0 16px; }
